@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Jeopardy</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>Musical Jeopardy</header>
+<div class="game-board">
+    <div class="question" style="grid-column: 1;">Rock</div>
+    <div class="question" style="grid-column: 2;">Pop</div>
+    <div class="question" style="grid-column: 3;">Jazz</div>
+    <div class="question" style="grid-column: 4;">Clascal</div>
+    <div class="question" style="grid-column: 5;">Hipop</div>
+    <div class="question" style="grid-column: 6;">Coutry</div>
+    <!-- 5x6 grid of questions -->
+    <div class="question" data-row="0" data-col="0">100</div>
+    <div class="question" data-row="0" data-col="1">100</div>
+    <div class="question" data-row="0" data-col="2">100</div>
+    <div class="question" data-row="0" data-col="3">100</div>
+    <div class="question" data-row="0" data-col="4">100</div>
+    <div class="question" data-row="0" data-col="5">100</div>
+
+    <div class="question" data-row="1" data-col="0">200</div>
+    <div class="question" data-row="1" data-col="1">200</div>
+    <div class="question" data-row="1" data-col="2">200</div>
+    <div class="question" data-row="1" data-col="3">200</div>
+    <div class="question" data-row="1" data-col="4">200</div>
+    <div class="question" data-row="1" data-col="5">200</div>
+
+    <div class="question" data-row="2" data-col="0">300</div>
+    <div class="question" data-row="2" data-col="1">300</div>
+    <div class="question" data-row="2" data-col="2">300</div>
+    <div class="question" data-row="2" data-col="3">300</div>
+    <div class="question" data-row="2" data-col="4">300</div>
+    <div class="question" data-row="2" data-col="5">300</div>
+
+    <!-- Row 3 -->
+    <div class="question" data-row="3" data-col="0">400</div>
+    <div class="question" data-row="3" data-col="1">400</div>
+    <div class="question" data-row="3" data-col="2">400</div>
+    <div class="question" data-row="3" data-col="3">400</div>
+    <div class="question" data-row="3" data-col="4">400</div>
+    <div class="question" data-row="3" data-col="5">400</div>
+
+    <!-- Row 4 -->
+    <div class="question" data-row="4" data-col="0">500</div>
+    <div class="question" data-row="4" data-col="1">500</div>
+    <div class="question" data-row="4" data-col="2">500</div>
+    <div class="question" data-row="4" data-col="3">500</div>
+    <div class="question" data-row="4" data-col="4">500</div>
+    <div class="question" data-row="4" data-col="5">500</div>
+</div>
+
+    <!-- Question modal -->
+    <div class="question-modal invisible" id="question-modal">
+        <div class="question-text"></div>
+        <button class="play-sound">Play Sound</button>
+        <button class="show-answer">Show Answer</button>
+        <div class="answer" style="display: none;">
+            <p class="answer-text"></p>
+            <button class="right">Right</button>
+            <button class="wrong">Wrong</button>
+        </div>
+    </div>
+
+    <!-- Player scores -->
+    <div class="player-scores">
+        <span id="current-player-arrow">&#8594;</span>
+        <div class="player-score" id="player1-score">Player 1: 0</div>
+        <div class="player-score" id="player2-score">Player 2: 0</div>
+    </div>
+
+    <button class="undo-button" style="position: fixed; top: 10px; right: 120px;">Undo</button>
+    <button class="reset-button" style="position: fixed; top: 10px; right: 10px;">Reset</button>
+    <!-- Switch player button -->
+    <button class="switch-player button">Switch Player</button>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
