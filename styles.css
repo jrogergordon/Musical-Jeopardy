@@ -12,31 +12,27 @@ body {
 
 .game-board {
     display: grid;
-    grid-template-columns: repeat(6, 100px);
-    /* Increased from 75px to 100px */
-    grid-template-rows: repeat(6, 100px);
-    /* Increased from 5 rows to 6 rows to accommodate the category row */
+    grid-template-columns: repeat(6, 80px);
+    grid-template-rows: repeat(6, 80px);
     gap: 0;
     justify-content: center;
     align-items: center;
-    margin: 170px 0 50px;
-}   
+    margin: 90px 0 50px;
+        /* Move the grid up by reducing the top margin */
+}
 
 .question {
     background-color: #0000ff;
     color: #fff;
-    padding: 15px;
-    /* Increased from 10px to 15px */
+    padding: 10px;
     border: 1px solid black;
     cursor: pointer;
     aspect-ratio: 1 / 1;
-    font-size: 30px;
-    /* Increased from 24px to 30px */
+    font-size: 24px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
 .player-scores {
     position: fixed;
     bottom: 0;
@@ -46,10 +42,13 @@ body {
     font-weight: bold;
     color: #fff;
     background-color: #0000ff;
-    padding: 10px;
     text-align: center;
     display: flex;
     justify-content: space-around;
+    height: 60px;
+    /* Increase the height of the footer */
+    padding: 10px;
+    /* Add some padding to the footer */
 }
 
 header {
@@ -155,7 +154,7 @@ button:active, .show-answer:active, .play-sound:active, .right:active, .wrong:ac
     font-size: 36px;
     font-weight: normal;
     position: absolute;
-    top: 50%;
+    top: 28%;
     transform: translateY(-50%);
     left: 0;
     margin-left: 290px;
@@ -177,3 +176,101 @@ button:active, .show-answer:active, .play-sound:active, .right:active, .wrong:ac
 .question:nth-child(-n+6) {
     cursor: default;
 }
+
+.answer-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    /* Add space between the answer and buttons */
+}
+
+.answer-buttons .right,
+.answer-buttons .wrong {
+    margin: 0;
+    /* Remove the margin from the buttons */
+}   
+
+#question-modal {
+    font-family: Arial, sans-serif;
+    /* Change the font family */
+    font-size: 24px;
+    /* Increase the font size */
+}
+
+#question-modal .answer {
+    margin-top: 20px;
+    /* Add space between the question and answer */
+}
+
+#question-modal .right,
+#question-modal .wrong {
+    margin: 10px;
+    /* Add space between the right and wrong buttons */
+    padding: 10px 20px;
+    /* Increase the button size */
+    font-size: 18px;
+    /* Increase the button font size */
+}
+
+#question-modal .show-answer,
+#question-modal .play-sound {
+    margin: 10px;
+    /* Add space between the show answer and play sound buttons */
+    padding: 10px 20px;
+    /* Increase the button size */
+    font-size: 18px;
+    /* Increase the button font size */
+}
+
+.switch-player {
+    position: fixed;
+    left: 2%;
+    bottom: 100px;
+    /* Move the switch player button up to accommodate the larger footer */
+}
+
+.question:not(:nth-child(-n+6)):hover {
+    background-color: #d0c9c9;
+    /* Change the hover color to a darker gray */
+}
+
+.question:not(:nth-child(-n+6)):active {
+    transform: none;
+    /* Remove the transformation on active state */
+    box-shadow: none;
+    /* Remove the box shadow on active state */
+    background-color: #000000
+}
+
+.answer-sound-button {
+    padding: 10px 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.2s ease-in-out;
+    margin: 10px;
+}
+
+.answer-sound-button.disabled {
+    background-color: #ccc;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.answer-sound-button:not(.disabled):hover {
+    background-color: lightgray;
+}
+
+.answer-sound-button:not(.disabled):active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.disabled {
+    background-color: #ccc;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+

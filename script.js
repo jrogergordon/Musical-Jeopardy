@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let moveHistory = [];
     let currentPlayer = 1;
     let playerScores = [0, 0];
-    
+    let currentAudio;
 
     const questions = [
         // Row 0
@@ -328,6 +328,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function showQuestionModal(questionData) {
+        stopCurrentSound();
         clearModalContent();
         // Hide the game board, player scores, and switch players button
         document.querySelector('.game-board').classList.add('invisible');
@@ -373,14 +374,25 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-
+    function stopCurrentSound() {
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+            currentAudio = null;
+        }
+    }
 
     function playSound(soundFile) {
-        const audio = new Audio(`sounds/${soundFile}`);
-        audio.play();
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+        }
+        currentAudio = new Audio(`sounds/${soundFile}`);
+        currentAudio.play();
     }
 
     function showAnswer(questionData) {
+        stopCurrentSound();
         const answer = document.querySelector(".answer");
         answer.style.display = "block";
         answer.querySelector(".answer-text").textContent = questionData.answer;
@@ -416,6 +428,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function handleAnswerClick(isCorrect, questionData) {
+        stopCurrentSound();
         moveHistory.push({
             playerScores: [...playerScores],
             currentPlayer,
@@ -434,6 +447,12 @@ document.addEventListener('DOMContentLoaded', function () {
         updatePlayerScores();
         hideQuestionModal();
         clearModalContent();
+        document.querySelector(".play-sound").addEventListener("click", () => playSound(questionData.answerSound));
+
+        // Enable the answer sound button
+        const answerSoundButton = document.querySelector(`.answer-sound-button[data-question-row="${questionData.row}"][data-question-col="${questionData.col}"]`);
+        answerSoundButton.disabled = false;
+        answerSoundButton.classList.remove('disabled'); // Remove greyed out style
     }
 
     function updatePlayerScores() {
@@ -447,6 +466,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function hideQuestionModal() {
+        stopCurrentSound();
         console.log("Hiding question modal");
         const modal = document.getElementById("question-modal");
         modal.classList.add('invisible');
@@ -486,6 +506,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector(".undo-button").addEventListener("click", undoTurn);
 
     function resetGame() {
+        stopCurrentSound();
         // Reset player scores
         playerScores = [0, 0];
         document.getElementById('player1-score').textContent = 'Player 1: 0';
@@ -502,14 +523,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Reset grid presentation
-        document.querySelectorAll(".question").forEach(question => {
+        document.querySelectorAll(".question[data-row][data-col]").forEach(question => {
             const row = parseInt(question.dataset.row);
             const col = parseInt(question.dataset.col);
             question.textContent = questions.find(q => q.row === row && q.col === col).value;
         });
+        document.querySelectorAll('.answer-sound-button').forEach(button => {
+            button.disabled = true;
+            button.classList.add('disabled'); // Add greyed out style
+        });
     }
 
     function undoTurn() {
+        stopCurrentSound();
         if (moveHistory.length > 0) {
             const previousState = moveHistory.pop();
 
@@ -527,7 +553,40 @@ document.addEventListener('DOMContentLoaded', function () {
             // Reset the content of the node
             const questionDiv = document.querySelector(`.question[data-row="${previousState.questionData.row}"][data-col="${previousState.questionData.col}"]`);
             questionDiv.textContent = previousState.questionData.value;
+            const answerSoundButton = document.querySelector(`.answer-sound-button[data-question-row="${previousState.questionData.row}"][data-question-col="${previousState.questionData.col}"]`);
+            answerSoundButton.disabled = true;
+            answerSoundButton.classList.add('disabled'); // Add greyed out style
         }
     }
+
+    function createAnswerSoundButtons() {
+        const answerSoundButtonsContainer = document.querySelector('.answer-sound-buttons');
+        questions.forEach((question) => {
+            const button = document.createElement('button');
+            button.textContent = ''; // Set the text content to an empty string initially
+            button.dataset.questionRow = question.row;
+            button.dataset.questionCol = question.col;
+            button.disabled = true; // Start out disabled (greyed out)
+            button.classList.add('answer-sound-button');
+            button.classList.add('disabled'); // Add greyed out style
+            answerSoundButtonsContainer.appendChild(button);
+        });
+    }
+    createAnswerSoundButtons();
+
+    document.querySelectorAll('.answer-sound-button').forEach((button) => {
+        button.addEventListener('click', () => {
+            const questionRow = parseInt(button.dataset.questionRow);
+            const questionCol = parseInt(button.dataset.questionCol);
+            const questionData = questions.find((q) => q.row === questionRow && q.col === questionCol);
+            playSound(questionData.answerSound);
+            button.textContent = `Play ${questionData.answer} Sound`; // Update the text content of the button
+        });
+    });
+
+    document.querySelector('.reset-button').addEventListener('click', stopCurrentSound);
+    document.querySelector('.undo-button').addEventListener('click', stopCurrentSound);
+
+    
 
 });
