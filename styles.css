@@ -274,3 +274,23 @@ button:active, .show-answer:active, .play-sound:active, .right:active, .wrong:ac
 }
 
 
+.answer-sound-buttons-left,
+.answer-sound-buttons-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.answer-sound-buttons-left {
+    left: 10px;
+}
+
+.answer-sound-buttons-right {
+    right: 10px;
+}
+
+/* Update the answer sound button styles to stack them vertically */
+.answer-sound-button {
+    display: block;
+    margin-bottom: 10px;
+}

@@ -562,8 +562,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function createAnswerSoundButtons() {
-        const answerSoundButtonsContainer = document.querySelector('.answer-sound-buttons');
-        questions.forEach((question) => {
+        const answerSoundButtonsLeft = document.querySelector('.answer-sound-buttons-left');
+        const answerSoundButtonsRight = document.querySelector('.answer-sound-buttons-right');
+        questions.forEach((question, index) => {
             const button = document.createElement('button');
             button.textContent = ''; // Set the text content to an empty string initially
             button.dataset.questionRow = question.row;
@@ -571,7 +572,11 @@ document.addEventListener('DOMContentLoaded', function () {
             button.disabled = true; // Start out disabled (greyed out)
             button.classList.add('answer-sound-button');
             button.classList.add('disabled'); // Add greyed out style
-            answerSoundButtonsContainer.appendChild(button);
+            if (index < questions.length / 2) {
+                answerSoundButtonsLeft.appendChild(button);
+            } else {
+                answerSoundButtonsRight.appendChild(button);
+            }
         });
     }
     createAnswerSoundButtons();
