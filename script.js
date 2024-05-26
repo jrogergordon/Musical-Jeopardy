@@ -529,8 +529,8 @@ document.addEventListener('DOMContentLoaded', function () {
             question.textContent = questions.find(q => q.row === row && q.col === col).value;
         });
         document.querySelectorAll('.answer-sound-button').forEach(button => {
-            button.disabled = true;
-            button.classList.add('disabled'); // Add greyed out style
+            button.textContent = ''; // Hide the text content
+            button.classList.add('disabled'); // Make the button disabled again
         });
     }
 
@@ -554,8 +554,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const questionDiv = document.querySelector(`.question[data-row="${previousState.questionData.row}"][data-col="${previousState.questionData.col}"]`);
             questionDiv.textContent = previousState.questionData.value;
             const answerSoundButton = document.querySelector(`.answer-sound-button[data-question-row="${previousState.questionData.row}"][data-question-col="${previousState.questionData.col}"]`);
-            answerSoundButton.disabled = true;
-            answerSoundButton.classList.add('disabled'); // Add greyed out style
+            answerSoundButton.textContent = ''; // Hide the text content
+            answerSoundButton.classList.add('disabled'); // Make the button disabled again
+
+            
         }
     }
 
